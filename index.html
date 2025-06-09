@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Android Studio Tutor - Learn Android Development the Fun Way!</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <h2>🤖 Android Studio Tutor</h2>
+            </div>
+            <div class="nav-menu">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#chapters" class="nav-link">Chapters</a>
+                <a href="#about" class="nav-link">About</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">Learn Android Development<br><span class="highlight">Like Never Before!</span></h1>
+                <p class="hero-subtitle">Master Android app development with <strong>super simple explanations</strong> and <em>fun analogies</em> that even a 12-year-old can understand. No confusing jargon, just pure learning!</p>
+                <button class="cta-button" onclick="scrollToChapters()">Start Learning 🚀</button>
+            </div>
+            <div class="hero-image">
+                <div class="phone-mockup">
+                    <div class="phone-screen">
+                        <div class="app-preview">
+                            <div class="app-header"></div>
+                            <div class="app-content">
+                                <div class="content-block"></div>
+                                <div class="content-block"></div>
+                                <div class="content-block small"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chapters Section -->
+    <section id="chapters" class="chapters">
+        <div class="container">
+            <h2 class="section-title">📚 Learning Chapters</h2>
+            <div class="chapters-grid">
+                <div class="chapter-card active" data-chapter="1">
+                    <div class="chapter-number">01</div>
+                    <h3>UI with Jetpack Compose</h3>
+                    <p>Learn to build beautiful app interfaces like <strong>painting on a digital canvas</strong>!</p>
+                    <span class="chapter-status">Current Chapter</span>
+                </div>
+                <div class="chapter-card available" data-chapter="2">
+                    <div class="chapter-number">02</div>
+                    <h3>Data & Variables</h3>
+                    <p>Learn about <strong>magic boxes that remember things</strong> for your app!</p>
+                    <span class="chapter-status">Available</span>
+                </div>
+                <div class="chapter-card available" data-chapter="3">
+                    <div class="chapter-number">03</div>
+                    <h3>App Logic & Functions</h3>
+                    <p>Make your app <strong>smart and interactive</strong> with decision-making!</p>
+                    <span class="chapter-status">Available</span>
+                </div>
+                <div class="chapter-card available" data-chapter="4">
+                    <div class="chapter-number">04</div>
+                    <h3>MVVM Architecture</h3>
+                    <p>Learn to organize your app like a <strong>well-managed restaurant</strong>!</p>
+                    <span class="chapter-status">Available</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chapter Content -->
+    <section id="chapter-content" class="chapter-content">
+        <div class="container">
+            <div class="content-header">
+                <h1>Chapter 1: UI with Jetpack Compose</h1>
+                <p class="chapter-intro">Think of Jetpack Compose like <strong>LEGO blocks for apps</strong> - you snap different pieces together to build something amazing! 🎨</p>
+            </div>
+
+            <div class="content-section">
+                <h2>🎯 What is Jetpack Compose?</h2>
+                <div class="explanation-box">
+                    <p>Imagine you're <strong>decorating your room</strong>. Instead of using hammer and nails (the old way), Jetpack Compose gives you <em>magic stickers</em> that stick perfectly wherever you want them!</p>
+                    
+                    <p>In tech terms: <strong>Jetpack Compose is Android's modern toolkit for building user interfaces</strong>. It's like having a super-smart assistant that helps you create beautiful app screens without all the complicated stuff.</p>
+                </div>
+
+                <h3>🧱 The Building Blocks</h3>
+                <p>Every app screen is made of <strong>"Composables"</strong> - think of them as <em>smart LEGO blocks</em> that know how to display themselves. Here are the main ones:</p>
+
+                <div class="code-example">
+                    <div class="code-header">
+                        <span class="code-title">Basic Composables</span>
+                        <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                    </div>
+                    <pre><code class="language-kotlin">@Composable
+fun MyFirstApp() {
+    // Text is like a digital sticker with words
+    Text(
+        text = "Hello, World! 👋",
+        fontSize = 24.sp,
+        color = Color.Blue
+    )
+    
+    // Button is like a clickable magic button
+    Button(onClick = { 
+        // This happens when someone taps the button
+        println("Button was clicked!")
+    }) {
+        Text("Click Me! 🚀")
+    }
+}</code></pre>
+                </div>
+
+                <div class="analogy-box">
+                    <h4>🎨 Real-World Analogy</h4>
+                    <p>Think of your phone screen like a <strong>bulletin board</strong>:</p>
+                    <ul>
+                        <li><code>Text</code> = <em>Sticky notes with messages</em></li>
+                        <li><code>Button</code> = <em>A doorbell you can press</em></li>
+                        <li><code>Image</code> = <em>A photo pinned to the board</em></li>
+                        <li><code>Column</code> = <em>Arranging things from top to bottom</em></li>
+                        <li><code>Row</code> = <em>Arranging things from left to right</em></li>
+                    </ul>
+                </div>
+
+                <h3>📐 Layout: Organizing Your Room</h3>
+                <p>Just like organizing your room, you need to decide <strong>where things go</strong> on your app screen:</p>
+
+                <div class="code-example">
+                    <div class="code-header">
+                        <span class="code-title">Layout Example</span>
+                        <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                    </div>
+                    <pre><code class="language-kotlin">@Composable
+fun OrganizedScreen() {
+    Column {  // Stack things vertically (like a tower)
+        Text("Welcome to My App! 🎉")
+        
+        Row {  // Put things side by side (like books on a shelf)
+            Button(onClick = { }) { Text("Yes") }
+            Button(onClick = { }) { Text("No") }
+        }
+        
+        Text("Choose an option above ☝️")
+    }
+}</code></pre>
+                </div>
+
+                <div class="tip-box">
+                    <h4>💡 Pro Tip</h4>
+                    <p><strong>Column</strong> = Think of stacking pancakes (top to bottom)<br>
+                    <strong>Row</strong> = Think of sitting friends in a row (left to right)</p>
+                </div>
+
+                <h3>🎨 Making It Pretty: Colors and Styles</h3>
+                <p>Now comes the <em>fun part</em> - making your app look <strong>absolutely gorgeous</strong>!</p>
+
+                <div class="code-example">
+                    <div class="code-header">
+                        <span class="code-title">Styling Your App</span>
+                        <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                    </div>
+                    <pre><code class="language-kotlin">@Composable
+fun PrettyScreen() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()  // Take up the whole screen
+            .background(Color.LightBlue)  // Paint the background
+            .padding(16.dp),  // Add some breathing room
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = "Beautiful App! ✨",
+            fontSize = 28.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color.White,
+            modifier = Modifier
+                .background(
+                    Color.Purple,
+                    shape = RoundedCornerShape(12.dp)
+                )
+                .padding(16.dp)
+        )
+    }
+}</code></pre>
+                </div>
+
+                <h3>🎯 Your First Challenge!</h3>
+                <div class="challenge-box">
+                    <h4>🏆 Build Your Name Card</h4>
+                    <p>Create a simple app that shows:</p>
+                    <ul>
+                        <li>Your name in <strong>big, bold letters</strong></li>
+                        <li>Your age in <em>smaller text</em></li>
+                        <li>A button that says "Hi there!" when clicked</li>
+                        <li>Use your favorite colors! 🌈</li>
+                    </ul>
+                </div>
+
+                <div class="next-steps">
+                    <h3>🚀 What's Next?</h3>
+                    <p>In the next chapter, we'll learn about <strong>data and variables</strong> - think of them as <em>magic boxes that remember things</em> for your app!</p>
+                    <button class="next-chapter-btn" onclick="showChapter(2)">Chapter 2: Data & Variables! 📚</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chapter 2 Content -->
+    <section id="chapter-2-content" class="chapter-content" style="display: none;">
+        <div class="container">
+            <div class="content-header">
+                <h1>Chapter 2: Data & Variables</h1>
+                <p class="chapter-intro">Variables are like <strong>magic boxes with labels</strong> - you can put different things inside them and use them whenever you need! 📦✨</p>
+            </div>
+
+            <div class="content-section">
+                <h2>🎁 What are Variables?</h2>
+                <div class="explanation-box">
+                    <p>Imagine you have a bunch of <strong>labeled boxes in your room</strong>. One box is labeled "Favorite Color" and you put "Blue" inside it. Another box is labeled "Age" and you put "12" inside it.</p>
+                    
+                    <p>In programming: <strong>Variables are containers that store data</strong>. Instead of physical boxes, they're digital containers in your app's memory that can hold different types of information!</p>
+                </div>
+
+                <h3>📝 Creating Your First Variables</h3>
+                <p>In Android development with Kotlin, creating a variable is like <strong>getting a new box and putting a label on it</strong>:</p>
+
+                <div class="code-example">
+                    <div class="code-header">
+                        <span class="code-title">Creating Variables</span>
+                        <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                    </div>
+                    <pre><code class="language-kotlin">// Creating variables is like labeling boxes!
+val myName = "Alex"           // A box labeled "myName" with "Alex" inside
+val myAge = 12               // A box labeled "myAge" with number 12
+val isHappy = true           // A box labeled "isHappy" with "yes/true" inside
+val favoriteColor = "Blue"   // A box with your favorite color
+
+// You can also create empty boxes to fill later
+var currentScore = 0         // This box starts with 0 but can change!</code></pre>
+                </div>
+
+                <div class="analogy-box">
+                    <h4>🏠 Real-World Analogy</h4>
+                    <p>Think of variables like <strong>different types of storage containers</strong>:</p>
+                    <ul>
+                        <li><code>String</code> = <em>A treasure chest for words and letters</em></li>
+                        <li><code>Int</code> = <em>A piggy bank for whole numbers</em></li>
+                        <li><code>Boolean</code> = <em>A light switch (on/off, true/false)</em></li>
+                        <li><code>Double</code> = <em>A precise scale for decimal numbers</em></li>
+                    </ul>
+                </div>
+
+                <h3>🔄 val vs var: The Difference</h3>
+                <p>This is like the difference between a <strong>locked safe</strong> and a <strong>regular box</strong>:</p>
+
+                <div class="code-example">
+                    <div class="code-header">
+                        <span class="code-title">val vs var Explained</span>
+                        <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                    </div>
+                    <pre><code class="language-kotlin">// val = "value" - like a locked safe, can't change once set
+val birthYear = 2011        // This will never change
+val schoolName = "ABC School"  // This stays the same
+
+// var = "variable" - like a regular box, you can change what's inside
+var currentLevel = 1        // This can change as you progress
+var pointsEarned = 0        // This will change as you play
+var playerName = "Guest"    // This can be updated
+
+// Example of changing var values
+currentLevel = 2            // Level up!
+pointsEarned = 150         // You earned points!
+playerName = "SuperPlayer"  // Got a new name!</code></pre>
+                </div>
+
+                <div class="tip-box">
+                    <h4>💡 Pro Tip</h4>
+                    <p><strong>val</strong> = Like writing in permanent marker (can't erase)<br>
+                    <strong>var</strong> = Like writing in pencil (can erase and change)</p>
+                </div>
+
+                <h3>🎨 Using Variables in Your App</h3>
+                <p>Now let's see how to use these <em>magic boxes</em> in your Jetpack Compose app:</p>
+
+                <div class="code-example">
+                    <div class="code-header">
+                        <span class="code-title">Variables in Action</span>
+                        <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                    </div>
+                    <pre><code class="language-kotlin">@Composable
+fun PersonalCard() {
+    // Our magic boxes with information
+    val userName = "Emma"
+    val userAge = 13
+    val favoriteEmoji = "🎨"
+    var clickCount = 0
+    
+    Column(
+        modifier = Modifier.padding(16.dp)
+    ) {
+        // Using the variables in our UI
+        Text(
+            text = "Hello, I'm $userName!",    // Using userName variable
+            fontSize = 24.sp,
+            fontWeight = FontWeight.Bold
+        )
+        
+        Text(
+            text = "I am $userAge years old",  // Using userAge variable
+            fontSize = 18.sp
+        )
+        
+        Text(
+            text = "My favorite emoji: $favoriteEmoji",  // Using favoriteEmoji
+            fontSize = 16.sp
+        )
+        
+        Button(onClick = { 
+            clickCount++  // Change the variable when clicked!
+        }) {
+            Text("Clicked $clickCount times")  // Show current click count
+        }
+    }
+}</code></pre>
+                </div>
+
+                <h3>🎯 Your Second Challenge!</h3>
+                <div class="challenge-box">
+                    <h4>🏆 Create Your Profile App</h4>
+                    <p>Build an app that uses variables to show:</p>
+                    <ul>
+                        <li>Your name using a <code>val</code> (it won't change)</li>
+                        <li>Your current mood using a <code>var</code> (it can change)</li>
+                        <li>A counter that goes up when you tap a button</li>
+                        <li>Your favorite animal emoji</li>
+                    </ul>
+                    <p><strong>Bonus:</strong> Add a button that changes your mood!</p>
+                </div>
+
+                <div class="next-steps">
+                    <h3>🚀 What's Next?</h3>
+                    <p>In the next chapter, we'll learn about <strong>functions and app logic</strong> - think of them as <em>recipes that make your app smart</em>!</p>
+                    <button class="next-chapter-btn" onclick="showChapter(3)">Chapter 3: App Logic & Functions! 🧠</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chapter 3 Content -->
+    <section id="chapter-3-content" class="chapter-content" style="display: none;">
+        <div class="container">
+            <div class="content-header">
+                <h1>Chapter 3: App Logic & Functions</h1>
+                <p class="chapter-intro">Functions are like <strong>recipe cards</strong> - they contain step-by-step instructions to do specific tasks! 👨‍🍳📝</p>
+            </div>
+
+            <div class="content-section">
+                <h2>🍳 What are Functions?</h2>
+                <div class="explanation-box">
+                    <p>Imagine you have a <strong>recipe book</strong>. Each recipe tells you exactly how to make something delicious. Functions work the same way - they're instructions that tell your app how to do specific tasks!</p>
+                    
+                    <p>In programming: <strong>Functions are reusable blocks of code that perform specific tasks</strong>. Instead of writing the same instructions over and over, you create a function once and use it whenever needed!</p>
+                </div>
+
+                <h3>🧪 Creating Your First Function</h3>
+                <p>Creating a function is like <strong>writing your own recipe</strong> that you can use anytime:</p>
+
+                <div class="code-example">
+                    <div class="code-header">
+                        <span class="code-title">Basic Functions</span>
+                        <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                    </div>
+                    <pre><code class="language-kotlin">// A simple function - like a recipe with no ingredients needed
+fun sayHello() {
+    println("Hello there, future developer! 👋")
+}
+
+// A function that takes ingredients (parameters)
+fun greetPerson(name: String) {
+    println("Hey $name! Welcome to coding! 🎉")
+}
+
+// A function that gives you something back (returns a value)
+fun addTwoNumbers(first: Int, second: Int): Int {
+    val result = first + second
+    return result  // Give back the answer
+}
+
+// Using our functions (calling them)
+sayHello()                    // Prints: Hello there, future developer! 👋
+greetPerson("Alex")          // Prints: Hey Alex! Welcome to coding! 🎉
+val sum = addTwoNumbers(5, 3) // sum becomes 8</code></pre>
+                </div>
+
+                <div class="analogy-box">
+                    <h4>🎭 Real-World Analogy</h4>
+                    <p>Think of functions like <strong>different types of machines</strong>:</p>
+                    <ul>
+                        <li><code>sayHello()</code> = <em>A doorbell that plays a message</em></li>
+                        <li><code>greetPerson(name)</code> = <em>A name tag printer that needs a name</em></li>
+                        <li><code>addNumbers(a, b)</code> = <em>A calculator that gives you an answer</em></li>
+                        <li><code>isGameWon()</code> = <em>A judge that says "you win" or "keep trying"</em></li>
+                    </ul>
+                </div>
+
+                <h3>🤔 Making Decisions: If-Else Statements</h3>
+                <p>Sometimes your app needs to <strong>make choices</strong>, like deciding what to wear based on the weather:</p>
+
+                <div class="code-example">
+                    <div class="code-header">
+                        <span class="code-title">Making Smart Decisions</span>
+                        <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                    </div>
+                    <pre><code class="language-kotlin">fun checkWeather(temperature: Int): String {
+    return if (temperature >= 25) {
+        "It's hot! 🌞 Wear shorts and a t-shirt!"
+    } else if (temperature >= 15) {
+        "Nice weather! 🌤️ Perfect for jeans and a light jacket!"
+    } else {
+        "It's cold! 🧥 Bundle up with a warm coat!"
+    }
+}
+
+fun checkGameScore(score: Int) {
+    if (score >= 100) {
+        println("Amazing! You're a superstar! ⭐")
+    } else if (score >= 50) {
+        println("Great job! You're doing well! 👍")
+    } else {
+        println("Keep practicing, you'll get there! 💪")
+    }
+}
+
+// Using decision-making functions
+val weatherAdvice = checkWeather(22)  // Returns: "Nice weather! 🌤️..."
+checkGameScore(75)                    // Prints: "Great job! You're doing well! 👍"</code></pre>
+                </div>
+
+                <div class="tip-box">
+                    <h4>💡 Pro Tip</h4>
+                    <p><strong>if</strong> = "If this happens, do this"<br>
+                    <strong>else if</strong> = "Otherwise, if this other thing happens, do that"<br>
+                    <strong>else</strong> = "If nothing else matches, do this default thing"</p>
+                </div>
+
+                <h3>🔁 Doing Things Multiple Times: Loops</h3>
+                <p>Sometimes you want to do the <em>same thing multiple times</em> - like counting from 1 to 10:</p>
+
+                <div class="code-example">
+                    <div class="code-header">
+                        <span class="code-title">Repeating Actions</span>
+                        <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                    </div>
+                    <pre><code class="language-kotlin">fun countToTen() {
+    // Count from 1 to 10
+    for (number in 1..10) {
+        println("Count: $number")
+    }
+}
+
+fun createMultipleGreetings() {
+    val friends = listOf("Emma", "Jake", "Sophie", "Marcus")
+    
+    // Say hello to each friend
+    for (friend in friends) {
+        println("Hi $friend! 👋")
+    }
+}
+
+fun playCountdownGame() {
+    println("Rocket launching in...")
+    
+    // Countdown from 5 to 1
+    for (count in 5 downTo 1) {
+        println("$count...")
+        Thread.sleep(1000)  // Wait 1 second (like dramatic pause!)
+    }
+    
+    println("🚀 BLAST OFF! 🚀")
+}
+
+// Using loops
+countToTen()              // Prints numbers 1 through 10
+createMultipleGreetings() // Says hi to all friends
+playCountdownGame()       // Epic rocket countdown!</code></pre>
+                </div>
+
+                <h3>🎮 Putting It All Together: A Fun App</h3>
+                <p>Let's combine everything to create a <strong>simple game app</strong>:</p>
+
+                <div class="code-example">
+                    <div class="code-header">
+                        <span class="code-title">Complete Mini Game</span>
+                        <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                    </div>
+                    <pre><code class="language-kotlin">@Composable
+fun SimpleGame() {
+    // Our game variables
+    var playerScore by remember { mutableStateOf(0) }
+    var playerLevel by remember { mutableStateOf(1) }
+    var playerName by remember { mutableStateOf("Player") }
+    
+    // Function to calculate next level
+    fun calculateLevel(score: Int): Int {
+        return when {
+            score >= 100 -> 5
+            score >= 75 -> 4
+            score >= 50 -> 3
+            score >= 25 -> 2
+            else -> 1
+        }
+    }
+    
+    // Function to get encouraging message
+    fun getEncouragement(level: Int): String {
+        return when (level) {
+            5 -> "🏆 LEGENDARY MASTER!"
+            4 -> "⭐ SUPER EXPERT!"
+            3 -> "🎯 SKILLED PLAYER!"
+            2 -> "👍 GETTING GOOD!"
+            else -> "🌱 JUST STARTING!"
+        }
+    }
+    
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = "Welcome, $playerName!",
+            fontSize = 24.sp,
+            fontWeight = FontWeight.Bold
+        )
+        
+        Spacer(modifier = Modifier.height(16.dp))
+        
+        Text(
+            text = "Score: $playerScore",
+            fontSize = 20.sp
+        )
+        
+        Text(
+            text = "Level: $playerLevel",
+            fontSize = 18.sp,
+            color = Color.Blue
+        )
+        
+        Text(
+            text = getEncouragement(playerLevel),
+            fontSize = 16.sp,
+            color = Color.Green
+        )
+        
+        Spacer(modifier = Modifier.height(24.dp))
+        
+        Button(onClick = {
+            playerScore += 10
+            playerLevel = calculateLevel(playerScore)
+        }) {
+            Text("Earn Points! 🎉")
+        }
+        
+        Button(onClick = {
+            playerScore = 0
+            playerLevel = 1
+        }) {
+            Text("Reset Game 🔄")
+        }
+    }
+}</code></pre>
+                </div>
+
+                <h3>🎯 Your Final Challenge!</h3>
+                <div class="challenge-box">
+                    <h4>🏆 Build Your Dream App</h4>
+                    <p>Combine everything you've learned to create:</p>
+                    <ul>
+                        <li>At least 3 different <strong>variables</strong></li>
+                        <li>At least 2 custom <strong>functions</strong></li>
+                        <li>Some <strong>if-else logic</strong> to make decisions</li>
+                        <li>A button that changes something when clicked</li>
+                        <li>Beautiful colors and styling</li>
+                    </ul>
+                    <p><strong>Ideas:</strong> Quiz app, pet care simulator, mood tracker, or anything you can imagine!</p>
+                </div>
+
+                <div class="next-steps">
+                    <h3>🚀 What's Next?</h3>
+                    <p>Ready for something more advanced? Let's learn about <strong>MVVM architecture</strong> - think of it as <em>organizing your app like a professional restaurant</em>!</p>
+                    <button class="next-chapter-btn" onclick="showChapter(4)">Chapter 4: MVVM Architecture! 🏗️</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chapter 4 Content -->
+    <section id="chapter-4-content" class="chapter-content" style="display: none;">
+        <div class="container">
+            <div class="content-header">
+                <h1>Chapter 4: MVVM Architecture</h1>
+                <p class="chapter-intro">MVVM is a <strong>design pattern</strong> that separates your app code into organized layers for better structure and maintainability! 🏗️✨</p>
+            </div>
+
+            <div class="content-section">
+                <h2>🏗️ What is MVVM Architecture?</h2>
+                <div class="explanation-box">
+                    <p>When building apps, we need to organize our code properly. If we put everything in one place, it becomes messy and hard to manage. <strong>MVVM helps us separate concerns</strong> by dividing code into three main parts.</p>
+                    
+                    <p><strong>MVVM stands for Model-View-ViewModel</strong>. It's a software design pattern that separates the user interface (UI) from the business logic and data handling.</p>
+                </div>
+
+                <div class="explanation-box">
+                    <h4>🔧 MVVM Components</h4>
+                    <p>Here's what each part does:</p>
+                    <ul>
+                        <li><strong>Model</strong> = <em>Handles data and business logic</em></li>
+                        <li><strong>View</strong> = <em>Displays the user interface</em></li>
+                        <li><strong>ViewModel</strong> = <em>Connects Model and View, manages UI state</em></li>
+                    </ul>
+                </div>
+
+                <!-- Sub-Chapter 1 -->
+                <div class="sub-chapter">
+                    <h3>📦 Sub-Chapter 1: Data Classes - Defining Data Structure</h3>
+                    <p>Data classes are <strong>specialized classes</strong> that hold data. They automatically generate useful functions for working with that data.</p>
+
+                    <div class="code-example">
+                        <div class="code-header">
+                            <span class="code-title">Creating a Data Class</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                        </div>
+                        <pre><code class="language-kotlin">// Data class defines the structure for a Post object
+data class Post(
+    val userId: Int,     // Identifies which user created this post
+    val id: Int,         // Unique identifier for this post
+    val title: String,   // The post's title text
+    val body: String     // The main content of the post
+)
+
+// Kotlin automatically generates:
+// - toString() method
+// - equals() and hashCode() methods
+// - copy() method</code></pre>
+                    </div>
+
+                    <div class="tip-box">
+                        <h4>💡 Why Data Classes?</h4>
+                        <p>Data classes provide a <strong>clean way to define data structures</strong>. They ensure consistency and reduce boilerplate code by auto-generating common methods.</p>
+                    </div>
+                </div>
+
+                <!-- Sub-Chapter 2 -->
+                <div class="sub-chapter">
+                    <h3>🌐 Sub-Chapter 2: API Service - Network Communication</h3>
+                    <p>API Service handles <strong>network requests</strong> to fetch data from remote servers using HTTP protocols.</p>
+
+                    <div class="code-example">
+                        <div class="code-header">
+                            <span class="code-title">API Service Setup</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                        </div>
+                        <pre><code class="language-kotlin">class APIService {
+    // Configure Retrofit for HTTP communication
+    private val retrofit = Retrofit.Builder()
+        .baseUrl("https://jsonplaceholder.typicode.com") // Base URL for API endpoints
+        .addConverterFactory(GsonConverterFactory.create()) // JSON converter
+        .build()
+
+    // Create implementation of API interface
+    val postServices = retrofit.create(ApiServices::class.java)
+
+    // Define API endpoints and methods
+    interface ApiServices {
+        @GET("/posts/1")  // HTTP GET request to /posts/1 endpoint
+        suspend fun getPost(): Post  // Returns Post object, suspends until response
+    }
+}</code></pre>
+                    </div>
+
+                    <div class="tip-box">
+                        <h4>💡 API Service Components</h4>
+                        <p>Key concepts:</p>
+                        <ul>
+                            <li><code>baseUrl</code> = <em>The server's base address</em></li>
+                            <li><code>@GET</code> = <em>HTTP GET request annotation</em></li>
+                            <li><code>suspend fun</code> = <em>Asynchronous function that doesn't block UI</em></li>
+                        </ul>
+                    </div>
+
+                    <div class="code-example">
+                        <div class="code-header">
+                            <span class="code-title">Actual JSON Response from API</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                        </div>
+                        <pre><code class="language-json">// GET request to: https://jsonplaceholder.typicode.com/posts/1
+// Returns this JSON response:
+
+{
+  "userId": 1,
+  "id": 1,
+  "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+  "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
+}</code></pre>
+                    </div>
+
+                    <div class="explanation-box">
+                        <p>This JSON response gets automatically converted to our <code>Post</code> data class. Notice how the JSON field names match exactly with our data class properties:</p>
+                        <ul>
+                            <li><code>"userId": 1</code> → <code>val userId: Int</code></li>
+                            <li><code>"id": 1</code> → <code>val id: Int</code></li>
+                            <li><code>"title": "..."</code> → <code>val title: String</code></li>
+                            <li><code>"body": "..."</code> → <code>val body: String</code></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Sub-Chapter 3 -->
+                <div class="sub-chapter">
+                    <h3>📚 Sub-Chapter 3: Repository - Data Access Layer</h3>
+                    <p>Repository <strong>abstracts data access</strong> by providing a clean interface to access data from different sources.</p>
+
+                    <div class="code-example">
+                        <div class="code-header">
+                            <span class="code-title">Repository Pattern</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                        </div>
+                        <pre><code class="language-kotlin">class PostRepository {
+    // Repository has access to data sources
+    val apiservice = APIService()
+
+    // Single point of access for Post data
+    suspend fun getPost(): Post {
+        return apiservice.postServices.getPost()
+    }
+    
+    // Repository can handle multiple data sources:
+    // - Remote API calls
+    // - Local database storage
+    // - In-memory caching
+    // - Error handling and retry logic
+}</code></pre>
+                    </div>
+
+                    <div class="tip-box">
+                        <h4>💡 Why Use Repository?</h4>
+                        <p>Repository provides <strong>separation of concerns</strong> - it centralizes data access logic and hides implementation details from other layers.</p>
+                    </div>
+                </div>
+
+                <!-- Sub-Chapter 4 -->
+                <div class="sub-chapter">
+                    <h3>🧠 Sub-Chapter 4: ViewModel - UI State Management</h3>
+                    <p>ViewModel <strong>manages UI-related data</strong> and survives configuration changes like screen rotations.</p>
+
+                    <div class="code-example">
+                        <div class="code-header">
+                            <span class="code-title">ViewModel Implementation</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                        </div>
+                        <pre><code class="language-kotlin">class PostViewModel : ViewModel() {
+    // Repository dependency for data access
+    val postrepository = PostRepository()
+
+    // Private mutable state for internal updates
+    private val _post = MutableStateFlow<Post>(Post(0, 0, "", ""))
+    // Public read-only state for UI observation
+    val post: StateFlow<Post> = _post.asStateFlow()
+
+    // Initialize ViewModel - fetch data on creation
+    init {
+        getPost()
+    }
+
+    // Function to fetch post data
+    fun getPost() {
+        viewModelScope.launch {  // Coroutine scope tied to ViewModel lifecycle
+            _post.value = postrepository.getPost()  // Update state with new data
+        }
+    }
+}</code></pre>
+                    </div>
+
+                    <div class="tip-box">
+                        <h4>💡 ViewModel Benefits</h4>
+                        <p>Key features:</p>
+                        <ul>
+                            <li><code>StateFlow</code> = <em>Observable state that UI can watch for changes</em></li>
+                            <li><code>viewModelScope</code> = <em>Coroutine scope that cancels when ViewModel is destroyed</em></li>
+                            <li><code>Lifecycle-aware</code> = <em>Survives configuration changes</em></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Sub-Chapter 5 -->
+                <div class="sub-chapter">
+                    <h3>📡 Sub-Chapter 5: StateFlow - Reactive State Management</h3>
+                    <p>StateFlow is a <strong>cold Flow</strong> that emits state updates to collectors and always holds the latest value.</p>
+
+                    <div class="code-example">
+                        <div class="code-header">
+                            <span class="code-title">Understanding StateFlow</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                        </div>
+                        <pre><code class="language-kotlin">// StateFlow pattern for reactive programming
+
+// Private mutable state - only ViewModel can modify
+private val _post = MutableStateFlow<Post>(Post(0, 0, "", ""))
+
+// Public read-only state - UI can observe but not modify
+val post: StateFlow<Post> = _post.asStateFlow()
+
+// UI layer observing StateFlow
+@Composable
+fun PostComposeView() {
+    val postviewmodel: PostViewModel = viewModel()
+    
+    // collectAsState() converts StateFlow to Compose State
+    // UI automatically recomposes when state changes
+    val postlist = postviewmodel.post.collectAsState().value
+    
+    // UI displays current state value
+}</code></pre>
+                    </div>
+
+                    <div class="tip-box">
+                        <h4>💡 StateFlow Characteristics</h4>
+                        <p><strong>StateFlow</strong> = Cold Flow that always has a value and emits latest state to new collectors<br>
+                        <strong>collectAsState()</strong> = Converts Flow to Compose State for automatic recomposition</p>
+                    </div>
+                </div>
+
+                <!-- Sub-Chapter 6 -->
+                <div class="sub-chapter">
+                    <h3>🎨 Sub-Chapter 6: Composable UI Layer</h3>
+                    <p>The View layer contains <strong>Composable functions</strong> that define the user interface and observe state changes.</p>
+
+                    <div class="code-example">
+                        <div class="code-header">
+                            <span class="code-title">Complete PostComposeView</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                        </div>
+                        <pre><code class="language-kotlin">@Composable
+fun PostComposeView() {
+    // Get ViewModel instance
+    val postviewmodel: PostViewModel = viewModel()
+    
+    // Observe StateFlow and convert to Compose State
+    val postlist = postviewmodel.post.collectAsState().value
+
+    // Define UI structure using Compose
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+    ) {
+        Column(modifier = Modifier.padding(12.dp)) {
+            Text(text = "User ID: ${postlist.userId}", fontSize = 18.sp)
+            Text(text = "Post ID: ${postlist.id}", fontSize = 18.sp)
+            Text(text = "Title: ${postlist.title}", fontSize = 18.sp)
+            Text(text = "Content: ${postlist.body}", fontSize = 18.sp)
+        }
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- Sub-Chapter 7 -->
+                <div class="sub-chapter">
+                    <h3>🔗 Sub-Chapter 7: Complete MVVM Flow</h3>
+                    <p>Understanding the <strong>data flow</strong> between all MVVM components and how they interact.</p>
+
+                    <div class="explanation-box">
+                        <h4>🔄 Data Flow Process</h4>
+                        <p><strong>1. App Launch</strong> → <em>MainActivity creates Compose UI</em></p>
+                        <p><strong>2. UI Creation</strong> → <em>PostComposeView initializes ViewModel</em></p>
+                        <p><strong>3. Data Request</strong> → <em>ViewModel calls Repository.getPost()</em></p>
+                        <p><strong>4. Network Call</strong> → <em>Repository uses APIService to fetch data</em></p>
+                        <p><strong>5. State Update</strong> → <em>ViewModel updates StateFlow with new data</em></p>
+                        <p><strong>6. UI Recomposition</strong> → <em>Compose UI automatically updates to show new data</em></p>
+                    </div>
+
+                    <div class="code-example">
+                        <div class="code-header">
+                            <span class="code-title">MainActivity - Application Entry Point</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                        </div>
+                        <pre><code class="language-kotlin">class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContent {
+            RetroX2Theme {
+                // Initialize the main UI composable
+                // This starts the MVVM data flow
+                PostComposeView()
+            }
+        }
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <h3>🎯 Your MVVM Challenge!</h3>
+                <div class="challenge-box">
+                    <h4>🏆 Build Your Own MVVM App</h4>
+                    <p>Create an app that follows MVVM pattern with:</p>
+                    <ul>
+                        <li>A <strong>data class</strong> for something you like (Book, Movie, Game)</li>
+                        <li>A <strong>Repository</strong> that can get data</li>
+                        <li>A <strong>ViewModel</strong> that manages the data</li>
+                        <li>A <strong>View</strong> that displays it beautifully</li>
+                        <li><strong>StateFlow</strong> to connect everything</li>
+                    </ul>
+                    <p><strong>Tip:</strong> Start simple - maybe just show data from a list instead of internet!</p>
+                </div>
+
+                <div class="next-steps">
+                    <h3>🎉 Congratulations!</h3>
+                    <p>You've mastered MVVM architecture! You now understand how to build <strong>professional, organized apps</strong> that are easy to maintain and expand. You're becoming a real Android developer!</p>
+                    <button class="celebration-btn" onclick="celebrate()">🎉 Celebrate Your Achievement! 🎉</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Android Studio Tutor. Made with ❤️ for young developers!</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html> 
