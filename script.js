@@ -226,7 +226,7 @@ function updateChapterStates(activeChapter) {
         if (chapterNum === activeChapter) {
             card.classList.add('active');
             card.querySelector('.chapter-status').textContent = 'Current Chapter';
-        } else if (chapterNum <= 4) { // All chapters are available now
+        } else if (chapterNum <= 5) { // All chapters are available now
             card.classList.add('available');
             card.querySelector('.chapter-status').textContent = 'Available';
         } else {

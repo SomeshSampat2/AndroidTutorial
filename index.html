@@ -77,6 +77,18 @@
                     <p>Learn to organize your app like a <strong>well-managed restaurant</strong>!</p>
                     <span class="chapter-status">Available</span>
                 </div>
+                <div class="chapter-card available" data-chapter="5">
+                    <div class="chapter-number">05</div>
+                    <h3>Room Database</h3>
+                    <p>Learn to <strong>store data locally</strong> in your app's database!</p>
+                    <span class="chapter-status">Available</span>
+                </div>
+                <div class="chapter-card coming-soon" data-chapter="6">
+                    <div class="chapter-number">06</div>
+                    <h3>Pagination</h3>
+                    <p>Learn to <strong>efficiently load large datasets</strong> in chunks!</p>
+                    <span class="chapter-status">Coming Soon</span>
+                </div>
             </div>
         </div>
     </section>
@@ -930,8 +942,431 @@ fun PostComposeView() {
                 </div>
 
                 <div class="next-steps">
+                    <h3>🚀 What's Next?</h3>
+                    <p>Now that you understand MVVM, let's learn about <strong>Room Database</strong> - how to <em>store data locally in your app</em>!</p>
+                    <button class="next-chapter-btn" onclick="showChapter(5)">Chapter 5: Room Database! 💾</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chapter 5 Content -->
+    <section id="chapter-5-content" class="chapter-content" style="display: none;">
+        <div class="container">
+            <div class="content-header">
+                <h1>Chapter 5: Room Database</h1>
+                <p class="chapter-intro">Room is a <strong>persistence library</strong> that provides an abstraction layer over SQLite for local data storage! 💾✨</p>
+            </div>
+
+            <div class="content-section">
+                <h2>💾 What is Room Database?</h2>
+                <div class="explanation-box">
+                    <p>When your app needs to store data that persists even after the app is closed, you need a <strong>local database</strong>. Room is Android's recommended solution for local data storage.</p>
+                    
+                    <p><strong>Room Database</strong> is a persistence library that provides an abstraction layer over SQLite. It handles database creation, queries, and data management with compile-time verification.</p>
+                </div>
+
+                <div class="explanation-box">
+                    <h4>🔧 Room Components</h4>
+                    <p>Room has three main components:</p>
+                    <ul>
+                        <li><strong>Entity</strong> = <em>Data classes that represent database tables</em></li>
+                        <li><strong>DAO</strong> = <em>Data Access Objects that define database operations</em></li>
+                        <li><strong>Database</strong> = <em>Main database configuration and access point</em></li>
+                    </ul>
+                </div>
+
+                <!-- Sub-Chapter 1 -->
+                <div class="sub-chapter">
+                    <h3>📦 Sub-Chapter 1: Entity Classes - Database Tables</h3>
+                    <p>Entity classes <strong>define the structure of database tables</strong> using annotations to specify table and column properties.</p>
+
+                    <div class="code-example">
+                        <div class="code-header">
+                            <span class="code-title">Note Entity Class</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                        </div>
+                        <pre><code class="language-kotlin">@Entity(tableName = "notes")
+data class Note(
+    @PrimaryKey(autoGenerate = true) 
+    val id: Int = 0,
+    val title: String
+)
+
+// @Entity - Marks this class as a database table
+// tableName - Specifies the table name in database
+// @PrimaryKey - Marks this field as the unique identifier
+// autoGenerate - Automatically generates unique IDs</code></pre>
+                    </div>
+
+                    <div class="tip-box">
+                        <h4>💡 Entity Annotations</h4>
+                        <p>Key annotations for entities:</p>
+                        <ul>
+                            <li><code>@Entity</code> = <em>Marks class as database table</em></li>
+                            <li><code>@PrimaryKey</code> = <em>Defines unique identifier column</em></li>
+                            <li><code>@ColumnInfo</code> = <em>Customizes column names and properties</em></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Sub-Chapter 2 -->
+                <div class="sub-chapter">
+                    <h3>🔧 Sub-Chapter 2: DAO Interface - Database Operations</h3>
+                    <p>DAO (Data Access Object) <strong>defines methods for database operations</strong> like insert, query, update, and delete.</p>
+
+                    <div class="code-example">
+                        <div class="code-header">
+                            <span class="code-title">Note DAO Interface</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                        </div>
+                        <pre><code class="language-kotlin">@Dao
+interface NoteDao {
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insert(note: Note)
+
+    @Query("SELECT * FROM notes ORDER BY id DESC")
+    fun getAllNotes(): Flow<List<Note>>
+    
+    @Query("DELETE FROM notes WHERE id = :id")
+    suspend fun deleteById(id: Int)
+}
+
+// @Dao - Marks interface as Data Access Object
+// @Insert - Defines insert operation with conflict strategy
+// @Query - Defines custom SQL query operations
+// Flow<List<Note>> - Returns observable stream of data
+// suspend - Marks function as coroutine for async operation</code></pre>
+                    </div>
+
+                    <div class="tip-box">
+                        <h4>💡 DAO Operations</h4>
+                        <p>Common DAO annotations:</p>
+                        <ul>
+                            <li><code>@Insert</code> = <em>Insert new records into database</em></li>
+                            <li><code>@Query</code> = <em>Execute custom SQL queries</em></li>
+                            <li><code>@Update</code> = <em>Update existing records</em></li>
+                            <li><code>@Delete</code> = <em>Delete records from database</em></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Sub-Chapter 3 -->
+                <div class="sub-chapter">
+                    <h3>🏗️ Sub-Chapter 3: Database Class - Configuration</h3>
+                    <p>The Database class <strong>configures the Room database</strong> and provides access to DAOs using the singleton pattern.</p>
+
+                    <div class="code-example">
+                        <div class="code-header">
+                            <span class="code-title">Room Database Configuration</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                        </div>
+                        <pre><code class="language-kotlin">@Database(entities = [Note::class], version = 1)
+abstract class NoteDatabase : RoomDatabase() {
+    abstract fun noteDao(): NoteDao
+
+    companion object {
+        @Volatile 
+        private var INSTANCE: NoteDatabase? = null
+
+        fun getDatabase(context: Context): NoteDatabase {
+            return INSTANCE ?: synchronized(this) {
+                Room.databaseBuilder(
+                    context.applicationContext,
+                    NoteDatabase::class.java,
+                    "note_database"
+                ).build().also { INSTANCE = it }
+            }
+        }
+    }
+}
+
+// @Database - Configures Room database with entities and version
+// @Volatile - Ensures INSTANCE visibility across threads
+// Singleton pattern - Ensures only one database instance
+// synchronized - Thread-safe database creation</code></pre>
+                    </div>
+
+                    <div class="tip-box">
+                        <h4>💡 Database Configuration</h4>
+                        <p>Key concepts:</p>
+                        <ul>
+                            <li><code>entities</code> = <em>List of Entity classes in this database</em></li>
+                            <li><code>version</code> = <em>Database schema version for migrations</em></li>
+                            <li><code>Singleton</code> = <em>Design pattern ensuring single instance</em></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Sub-Chapter 4 -->
+                <div class="sub-chapter">
+                    <h3>📱 Sub-Chapter 4: Application Class - Database Initialization</h3>
+                    <p>The Application class <strong>provides global access to the database</strong> instance throughout the app lifecycle.</p>
+
+                    <div class="code-example">
+                        <div class="code-header">
+                            <span class="code-title">Application Class Setup</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                        </div>
+                        <pre><code class="language-kotlin">class NoteApplication : Application() {
+    // Lazy initialization of database
+    val database by lazy {
+        NoteDatabase.getDatabase(this)
+    }
+}
+
+// Application class - Entry point for app-wide resources
+// lazy - Deferred initialization until first access
+// Global access - Database available throughout app
+// Context - Application context for database creation</code></pre>
+                    </div>
+
+                    <div class="tip-box">
+                        <h4>💡 Application Class Benefits</h4>
+                        <p>Application class provides:</p>
+                        <ul>
+                            <li><code>Global Access</code> = <em>Database available to all components</em></li>
+                            <li><code>Lazy Loading</code> = <em>Database created only when needed</em></li>
+                            <li><code>Lifecycle Management</code> = <em>Lives as long as app process</em></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Sub-Chapter 5 -->
+                <div class="sub-chapter">
+                    <h3>📚 Sub-Chapter 5: Repository with Database</h3>
+                    <p>Repository <strong>abstracts database access</strong> and provides a clean API for data operations using the DAO.</p>
+
+                    <div class="code-example">
+                        <div class="code-header">
+                            <span class="code-title">Note Repository Implementation</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                        </div>
+                        <pre><code class="language-kotlin">class NoteRepository(private val noteDao: NoteDao) {
+
+    suspend fun getAllNotes(): Flow<List<Note>> {
+        return noteDao.getAllNotes()
+    }
+
+    suspend fun insert(note: Note) {
+        noteDao.insert(note)
+    }
+
+    suspend fun deleteById(id: Int) {
+        noteDao.deleteById(id)
+    }
+}
+
+// Repository pattern - Abstracts data source implementation
+// DAO dependency - Repository uses DAO for database operations
+// suspend functions - All database operations are asynchronous
+// Flow<List<Note>> - Observable stream for reactive UI updates</code></pre>
+                    </div>
+
+                    <div class="tip-box">
+                        <h4>💡 Repository Benefits</h4>
+                        <p>Repository provides:</p>
+                        <ul>
+                            <li><code>Abstraction</code> = <em>Hides database implementation details</em></li>
+                            <li><code>Testability</code> = <em>Easy to mock for unit testing</em></li>
+                            <li><code>Centralization</code> = <em>Single source of truth for data</em></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Sub-Chapter 6 -->
+                <div class="sub-chapter">
+                    <h3>🧠 Sub-Chapter 6: ViewModel with Database</h3>
+                    <p>ViewModel <strong>manages UI state and coordinates database operations</strong> through the repository layer.</p>
+
+                    <div class="code-example">
+                        <div class="code-header">
+                            <span class="code-title">Note ViewModel Implementation</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                        </div>
+                        <pre><code class="language-kotlin">class NoteViewModel(application: Application) : AndroidViewModel(application) {
+    private val database = (application as NoteApplication).database
+
+    // Repository instance
+    val repository by lazy {
+        NoteRepository(database.noteDao())
+    }
+    
+    private val _notes: MutableStateFlow<List<Note>> = MutableStateFlow(emptyList())
+    val notes: StateFlow<List<Note>> = _notes
+
+    init {
+        getAllNotes()
+    }
+
+    private fun getAllNotes() {
+        viewModelScope.launch {
+            repository.getAllNotes().collect {
+                _notes.value = it
+            }
+        }
+    }
+
+    fun addNote(title: String) {
+        viewModelScope.launch {
+            if (title.isNotEmpty()) {
+                repository.insert(Note(title = title))
+            }
+        }
+    }
+
+    fun deleteNote(id: Int) {
+        viewModelScope.launch {
+            repository.deleteById(id)
+        }
+    }
+}</code></pre>
+                    </div>
+
+                    <div class="tip-box">
+                        <h4>💡 AndroidViewModel</h4>
+                        <p>AndroidViewModel provides:</p>
+                        <ul>
+                            <li><code>Application Context</code> = <em>Access to application-wide resources</em></li>
+                            <li><code>Database Access</code> = <em>Can access database through Application class</em></li>
+                            <li><code>Lifecycle Awareness</code> = <em>Survives configuration changes</em></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Sub-Chapter 7 -->
+                <div class="sub-chapter">
+                    <h3>🎨 Sub-Chapter 7: Complete UI with Database</h3>
+                    <p>The UI layer <strong>displays database content</strong> and provides user interactions for CRUD operations.</p>
+
+                    <div class="code-example">
+                        <div class="code-header">
+                            <span class="code-title">MainScreen with Database Operations</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                        </div>
+                        <pre><code class="language-kotlin">@Composable
+fun MainScreen() {
+    val viewModel: NoteViewModel = viewModel()
+    var text by remember { mutableStateOf("") }
+    val notes by viewModel.notes.collectAsState()
+    
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 16.dp, vertical = 64.dp)
+    ) {
+        // Input field for new notes
+        OutlinedTextField(
+            value = text,
+            onValueChange = { text = it },
+            label = { Text("Enter note") },
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        // Add note button
+        Button(
+            onClick = {
+                viewModel.addNote(text)
+                text = ""  // Clear input after adding
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Add Note")
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Display list of notes
+        LazyColumn {
+            items(notes) { note ->
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = note.title,
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(end = 8.dp)
+                    )
+                    IconButton(
+                        onClick = { viewModel.deleteNote(note.id) }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Delete,
+                            contentDescription = "Delete note"
+                        )
+                    }
+                }
+            }
+        }
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- Sub-Chapter 8 -->
+                <div class="sub-chapter">
+                    <h3>🔗 Sub-Chapter 8: Complete Database Flow</h3>
+                    <p>Understanding the <strong>complete data flow</strong> from UI interactions to database operations.</p>
+
+                    <div class="explanation-box">
+                        <h4>🔄 Database Operation Flow</h4>
+                        <p><strong>1. App Launch</strong> → <em>Application creates database instance</em></p>
+                        <p><strong>2. ViewModel Creation</strong> → <em>Gets database through Application class</em></p>
+                        <p><strong>3. Repository Setup</strong> → <em>ViewModel creates repository with DAO</em></p>
+                        <p><strong>4. Data Loading</strong> → <em>Repository queries database via DAO</em></p>
+                        <p><strong>5. UI Updates</strong> → <em>StateFlow emits data changes to UI</em></p>
+                        <p><strong>6. User Interactions</strong> → <em>UI calls ViewModel methods for CRUD operations</em></p>
+                        <p><strong>7. Database Persistence</strong> → <em>Data survives app restarts</em></p>
+                    </div>
+
+                    <div class="code-example">
+                        <div class="code-header">
+                            <span class="code-title">MainActivity with Database App</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                        </div>
+                        <pre><code class="language-kotlin">class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContent {
+            RetroX2Theme {
+                // Launch the main screen with database functionality
+                MainScreen()
+            }
+        }
+    }
+}
+
+// Don't forget to register NoteApplication in AndroidManifest.xml:
+// <application android:name=".NoteApplication" ... ></code></pre>
+                    </div>
+                </div>
+
+                <h3>🎯 Your Room Database Challenge!</h3>
+                <div class="challenge-box">
+                    <h4>🏆 Build Your Own Database App</h4>
+                    <p>Create an app that uses Room Database with:</p>
+                    <ul>
+                        <li>An <strong>Entity class</strong> for your favorite items (Books, Movies, Tasks)</li>
+                        <li>A <strong>DAO interface</strong> with CRUD operations</li>
+                        <li>A <strong>Database class</strong> with proper configuration</li>
+                        <li>A <strong>Repository</strong> for data access</li>
+                        <li>A <strong>ViewModel</strong> managing database operations</li>
+                        <li>A <strong>UI</strong> to add, display, and delete items</li>
+                    </ul>
+                    <p><strong>Bonus:</strong> Add update functionality and search features!</p>
+                </div>
+
+                <div class="next-steps">
                     <h3>🎉 Congratulations!</h3>
-                    <p>You've mastered MVVM architecture! You now understand how to build <strong>professional, organized apps</strong> that are easy to maintain and expand. You're becoming a real Android developer!</p>
+                    <p>You've mastered local data storage with Room Database! You can now build apps that <strong>persist data locally</strong> and survive app restarts. You're becoming a professional Android developer!</p>
                     <button class="celebration-btn" onclick="celebrate()">🎉 Celebrate Your Achievement! 🎉</button>
                 </div>
             </div>
