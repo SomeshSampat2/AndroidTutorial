@@ -225,6 +225,87 @@ fun StyledText() {
                     </div>
                 </div>
 
+                <!-- Sub-Chapter 1.7: Putting It All Together -->
+                <div class="sub-chapter">
+                    <h3>1.7 - Putting It All Together: Building an Interactive UI</h3>
+                    <div class="explanation-box">
+                        <p>Let's combine everything we've learned: <code>@Composable</code>, <code>remember</code>, <code>mutableStateOf</code>, layouts, and modifiers to build a small, interactive component. This example lets a user type their name and see a personalized greeting update in real-time.</p>
+                    </div>
+                    <div class="code-example">
+                        <div class="code-header">
+                            <span class="code-title">Interactive Greeting Card</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                        </div>
+                        <pre><code class="language-kotlin">
+@Composable
+fun GreetingCard() {
+    // 1. Create a state for the name. It's remembered across recompositions.
+    //    We use a delegate `by` to avoid writing `.value` everywhere.
+    var name by remember { mutableStateOf("") }
+
+    // 2. Use a Column to arrange the UI elements vertically.
+    Column(
+        modifier = Modifier
+            .padding(16.dp)
+            .fillMaxWidth(), // Make the column take the full width
+        horizontalAlignment = Alignment.CenterHorizontally // Center elements horizontally
+    ) {
+        // 3. Display a title for our component.
+        Text(
+            text = "Personalized Greeting Card",
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold
+        )
+
+        // 4. Add some space between the title and the input field.
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // 5. The input field for the user to type their name.
+        OutlinedTextField(
+            value = name,
+            onValueChange = { newName ->
+                // When the text changes, update our `name` state.
+                name = newName
+            },
+            label = { Text("Enter your name") } // A hint for the user
+        )
+
+        // 6. Add more space.
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // 7. Display the personalized greeting. This Text will recompose
+        //    every time the `name` state changes.
+        Text(
+            text = "Hello, $name!",
+            color = Color.Green,
+            fontSize = 24.sp
+        )
+    }
+}</code></pre>
+                    </div>
+                    <div class="explanation-box">
+                        <h4>Code Breakdown:</h4>
+                        <ol>
+                            <li><strong>State with Delegation:</strong> We declare our state `var name by remember { mutableStateOf("") }`. The `by` keyword is a Kotlin property delegate that lets us access and modify the state's value directly with `name` instead of `name.value`. It's a common and cleaner way to handle state.</li>
+                            <li><strong>Layout & Alignment:</strong> The <code>Column</code> arranges our <code>Text</code> and <code>OutlinedTextField</code> vertically. We use modifiers to add padding, set the width, and center the content for a clean look.</li>
+                            <li><strong>Title:</strong> A simple <code>Text</code> composable acts as a title. We use <code>fontSize</code> and <code>fontWeight</code> to style it.</li>
+                            <li><strong>Spacing:</strong> The <code>Spacer</code> composable is a simple way to add empty space between elements.</li>
+                            <li><strong>User Input:</strong> <code>OutlinedTextField</code> is a material design component that provides a beautiful text input field.
+                                <ul>
+                                    <li><code>value</code> is what's currently displayed in the field (our `name` state).</li>
+                                    <li><code>onValueChange</code> is a callback that fires every time the user types. We update our `name` state here, which triggers a recomposition.</li>
+                                    <li><code>label</code> provides a helpful hint to the user.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Dynamic Greeting:</strong> This final <code>Text</code> composable reads the `name` state. Because it reads the state, Compose knows to redraw (recompose) it whenever `name` changes, creating a seamless, real-time update.</li>
+                        </ol>
+                    </div>
+                     <div class="tip-box">
+                        <h4>💡 Try It Yourself!</h4>
+                        <p>What happens if you change the initial state from <code>""</code> to <code>"Android"</code>? Or change the greeting text color? Experiment with the code to see how your changes affect the final UI. This is the best way to learn!</p>
+                    </div>
+                </div>
+
                 <div class="next-steps">
                     <h3>🚀 What's Next?</h3>
                     <p>Now that you understand the basics, let's dive deeper into building beautiful UIs in the next chapter!</p>
@@ -1041,7 +1122,7 @@ interface NoteDao {
                     </div>
 
                     <div class="tip-box">
-                        <h4>�� DAO Operations</h4>
+                        <h4>💡 DAO Operations</h4>
                         <p>Common DAO annotations:</p>
                         <ul>
                             <li><code>@Insert</code> = <em>Insert new records into database</em></li>
