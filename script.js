@@ -187,17 +187,16 @@ function initializeChapterCards() {
 
 // Show specific chapter content
 function showChapter(chapterNumber) {
+    const totalChapters = 7;
     // Hide all chapter contents
-    const allChapters = document.querySelectorAll('[id$="-content"]');
+    const allChapters = document.querySelectorAll('.chapter-content');
     allChapters.forEach(chapter => {
         chapter.style.display = 'none';
     });
     
     // Show the selected chapter
     let targetChapter;
-    if (chapterNumber === 1) {
-        targetChapter = document.getElementById('chapter-content');
-    } else {
+    if (chapterNumber > 0 && chapterNumber <= totalChapters) {
         targetChapter = document.getElementById(`chapter-${chapterNumber}-content`);
     }
     
@@ -216,21 +215,22 @@ function showChapter(chapterNumber) {
 // Update chapter card active states
 function updateChapterStates(activeChapter) {
     const chapterCards = document.querySelectorAll('.chapter-card');
-    
-    chapterCards.forEach((card, index) => {
+    const totalAvailableChapters = 6; // Chapters 1-6 are available
+
+    chapterCards.forEach(card => {
         const chapterNum = parseInt(card.dataset.chapter);
         
         // Remove all state classes
-        card.classList.remove('active', 'available', 'upcoming');
+        card.classList.remove('active', 'available', 'coming-soon');
         
         if (chapterNum === activeChapter) {
             card.classList.add('active');
             card.querySelector('.chapter-status').textContent = 'Current Chapter';
-        } else if (chapterNum <= 5) { // All chapters are available now
+        } else if (chapterNum <= totalAvailableChapters) {
             card.classList.add('available');
             card.querySelector('.chapter-status').textContent = 'Available';
         } else {
-            card.classList.add('upcoming');
+            card.classList.add('coming-soon');
             card.querySelector('.chapter-status').textContent = 'Coming Soon';
         }
     });
@@ -248,254 +248,167 @@ function showComingSoonMessage() {
         color: white;
         padding: 1rem 1.5rem;
         border-radius: 8px;
-        box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
-        z-index: 10000;
-        font-weight: 500;
-        transform: translateX(400px);
-        transition: transform 0.3s ease;
+        font-weight: bold;
+        z-index: 1000;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        opacity: 0;
+        transform: translateX(100%);
+        transition: opacity 0.5s ease, transform 0.5s ease;
     `;
-    notification.textContent = '🚧 This chapter is coming soon! Stay tuned! 🚀';
-    
+    notification.textContent = 'This chapter is coming soon! 🚀';
     document.body.appendChild(notification);
     
     // Animate in
     setTimeout(() => {
+        notification.style.opacity = '1';
         notification.style.transform = 'translateX(0)';
     }, 100);
     
-    // Remove after 3 seconds
+    // Animate out and remove
     setTimeout(() => {
-        notification.style.transform = 'translateX(400px)';
+        notification.style.opacity = '0';
+        notification.style.transform = 'translateX(100%)';
         setTimeout(() => {
-            if (notification.parentNode) {
-                notification.parentNode.removeChild(notification);
-            }
-        }, 300);
+            document.body.removeChild(notification);
+        }, 500);
     }, 3000);
 }
 
-// Add some interactive effects for mobile
+// Add mobile-specific interactions
 function addMobileInteractions() {
-    if (window.innerWidth <= 768) {
-        const phoneScreen = document.querySelector('.phone-screen');
-        if (phoneScreen) {
-            phoneScreen.addEventListener('click', function() {
-                this.style.transform = 'scale(1.05)';
-                setTimeout(() => {
-                    this.style.transform = 'scale(1)';
-                }, 200);
-            });
-        }
-    }
-}
-
-// Easter egg: Konami code
-let konamiCode = '';
-const konamiSequence = 'ArrowUpArrowUpArrowDownArrowDownArrowLeftArrowRightArrowLeftArrowRightKeyBKeyA';
-
-document.addEventListener('keydown', function(e) {
-    konamiCode += e.code;
+    const hero = document.querySelector('.hero');
+    let touchStartX = 0;
     
-    if (konamiCode.length > konamiSequence.length) {
-        konamiCode = konamiCode.slice(-konamiSequence.length);
-    }
-    
-    if (konamiCode === konamiSequence) {
-        activateEasterEgg();
-        konamiCode = '';
-    }
-});
-
-function activateEasterEgg() {
-    // Add rainbow animation to the hero title
-    const heroTitle = document.querySelector('.hero-title');
-    if (heroTitle) {
-        heroTitle.style.animation = 'rainbow 2s linear infinite';
-        
-        // Add rainbow keyframes
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes rainbow {
-                0% { filter: hue-rotate(0deg); }
-                100% { filter: hue-rotate(360deg); }
-            }
-        `;
-        document.head.appendChild(style);
-        
-        // Show easter egg message
-        const message = document.createElement('div');
-        message.style.cssText = `
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: linear-gradient(45deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3);
-            background-size: 400% 400%;
-            animation: rainbow-bg 2s ease infinite;
-            color: white;
-            padding: 2rem;
-            border-radius: 12px;
-            text-align: center;
-            font-weight: bold;
-            z-index: 10000;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        `;
-        message.innerHTML = '🎉 You found the secret code! <br>You are a true developer! 🚀';
-        
-        const rainbowBgStyle = document.createElement('style');
-        rainbowBgStyle.textContent = `
-            @keyframes rainbow-bg {
-                0% { background-position: 0% 50%; }
-                50% { background-position: 100% 50%; }
-                100% { background-position: 0% 50%; }
-            }
-        `;
-        document.head.appendChild(rainbowBgStyle);
-        
-        document.body.appendChild(message);
-        
-        setTimeout(() => {
-            if (message.parentNode) {
-                message.parentNode.removeChild(message);
-            }
-            heroTitle.style.animation = '';
-        }, 5000);
-    }
-}
-
-// Initialize mobile interactions on load
-window.addEventListener('load', addMobileInteractions);
-
-// Handle window resize
-window.addEventListener('resize', function() {
-    addMobileInteractions();
-});
-
-// Add smooth hover effects for buttons
-document.addEventListener('DOMContentLoaded', function() {
-    const buttons = document.querySelectorAll('button, .chapter-card');
-    
-    buttons.forEach(button => {
-        button.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-2px)';
-        });
-        
-        button.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0)';
-        });
+    hero.addEventListener('touchstart', (e) => {
+        touchStartX = e.touches[0].clientX;
     });
-});
+    
+    hero.addEventListener('touchend', (e) => {
+        const touchEndX = e.changedTouches[0].clientX;
+        if (touchEndX < touchStartX - 50) { // Swipe left
+            showChapter(2);
+        }
+    });
+}
 
-// Scroll progress indicator
+// Easter egg functionality
+function activateEasterEgg() {
+    let konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+    let keySequence = [];
+    
+    document.addEventListener('keydown', (e) => {
+        keySequence.push(e.key);
+        keySequence = keySequence.slice(-konamiCode.length);
+        
+        if (JSON.stringify(keySequence) === JSON.stringify(konamiCode)) {
+            const easterEgg = document.createElement('div');
+            easterEgg.innerHTML = `
+                <div style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:9998; display:flex; align-items:center; justify-content:center; flex-direction:column; color:lime; font-family: 'Courier New', monospace;">
+                    <h1 style="font-size:3rem; margin-bottom:1rem;">CODE MASTER!</h1>
+                    <p style="font-size:1.5rem;">You found the secret key!</p>
+                    <pre style="margin-top: 2rem; background: #111; padding: 1rem; border-radius: 8px; border: 1px solid lime;">
+/\\_/\\
+( o.o )
+ > ^ <
+                    </pre>
+                </div>
+            `;
+            document.body.appendChild(easterEgg);
+            
+            setTimeout(() => {
+                document.body.removeChild(easterEgg);
+            }, 4000);
+        }
+    });
+}
+
+// Create and manage scroll progress bar
 function createScrollProgress() {
     const progressBar = document.createElement('div');
     progressBar.style.cssText = `
         position: fixed;
         top: 0;
         left: 0;
+        height: 5px;
+        background: linear-gradient(90deg, #8b5cf6, #ec4899);
         width: 0%;
-        height: 3px;
-        background: linear-gradient(90deg, #6366f1, #10b981);
-        z-index: 10000;
-        transition: width 0.1s ease;
+        z-index: 9999;
+        transition: width 0.1s ease-out;
     `;
     document.body.appendChild(progressBar);
     
     window.addEventListener('scroll', () => {
-        const scrollTop = window.scrollY;
-        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        const scrollPercent = (scrollTop / docHeight) * 100;
-        progressBar.style.width = scrollPercent + '%';
+        const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrolled = (window.scrollY / scrollableHeight) * 100;
+        progressBar.style.width = `${scrolled}%`;
     });
 }
 
-// Initialize scroll progress on load
-window.addEventListener('load', createScrollProgress);
-
-// Celebration function for completing all chapters
+// Celebration animation
 function celebrate() {
-    // Create confetti effect
-    const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
-    
-    for (let i = 0; i < 50; i++) {
-        setTimeout(() => {
-            createConfetti(colors[Math.floor(Math.random() * colors.length)]);
-        }, i * 100);
+    const confettiColors = ['#8b5cf6', '#ec4899', '#f59e0b', '#22c55e', '#3b82f6'];
+    for (let i = 0; i < 100; i++) {
+        createConfetti(confettiColors[i % confettiColors.length]);
     }
     
-    // Show celebration message
     const celebrationMessage = document.createElement('div');
+    celebrationMessage.textContent = '🎉 You are awesome! 🎉';
     celebrationMessage.style.cssText = `
         position: fixed;
         top: 50%;
         left: 50%;
-        transform: translate(-50%, -50%);
-        background: linear-gradient(45deg, #6366f1, #8b5cf6, #ec4899, #ef4444);
-        background-size: 400% 400%;
-        animation: rainbow-bg 2s ease infinite;
+        transform: translate(-50%, -50%) scale(0);
+        background: linear-gradient(135deg, #8b5cf6, #ec4899);
         color: white;
-        padding: 3rem;
-        border-radius: 20px;
-        text-align: center;
+        padding: 2rem 3rem;
+        border-radius: 1rem;
+        font-size: 2.5rem;
         font-weight: bold;
-        z-index: 10000;
-        box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-        max-width: 500px;
-        font-size: 1.2rem;
+        z-index: 10001;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        transition: transform 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
     `;
-    celebrationMessage.innerHTML = `
-        <h2 style="margin: 0 0 1rem 0; font-size: 2rem;">🎉 CONGRATULATIONS! 🎉</h2>
-        <p style="margin: 0 0 1rem 0;">You've mastered the fundamentals of Android development!</p>
-        <p style="margin: 0 0 1rem 0;">🏆 You're now ready to build amazing apps! 🏆</p>
-        <p style="margin: 0; font-size: 1rem; opacity: 0.9;">Keep coding and creating awesome things!</p>
-    `;
-    
     document.body.appendChild(celebrationMessage);
     
-    // Auto-remove after 8 seconds
     setTimeout(() => {
-        if (celebrationMessage.parentNode) {
-            celebrationMessage.style.opacity = '0';
-            celebrationMessage.style.transform = 'translate(-50%, -50%) scale(0.8)';
-            setTimeout(() => {
-                celebrationMessage.parentNode.removeChild(celebrationMessage);
-            }, 500);
-        }
-    }, 8000);
+        celebrationMessage.style.transform = 'translate(-50%, -50%) scale(1)';
+    }, 100);
+    
+    setTimeout(() => {
+        celebrationMessage.style.transform = 'translate(-50%, -50%) scale(0)';
+        setTimeout(() => {
+            document.body.removeChild(celebrationMessage);
+        }, 500);
+    }, 3000);
 }
 
-// Create confetti particles
 function createConfetti(color) {
     const confetti = document.createElement('div');
     confetti.style.cssText = `
         position: fixed;
-        width: 10px;
-        height: 10px;
-        background: ${color};
-        top: -10px;
         left: ${Math.random() * 100}vw;
-        border-radius: 50%;
-        pointer-events: none;
-        z-index: 9999;
-        animation: confettiFall 3s linear forwards;
+        top: ${Math.random() * -100}px;
+        width: ${Math.random() * 15 + 5}px;
+        height: ${Math.random() * 10 + 5}px;
+        background-color: ${color};
+        transform: rotate(${Math.random() * 360}deg);
+        animation: fall ${Math.random() * 4 + 3}s linear infinite;
+        z-index: 10000;
+        opacity: ${Math.random()};
     `;
-    
     document.body.appendChild(confetti);
     
-    // Remove confetti after animation
     setTimeout(() => {
-        if (confetti.parentNode) {
-            confetti.parentNode.removeChild(confetti);
-        }
-    }, 3000);
+        document.body.removeChild(confetti);
+    }, 7000);
 }
 
-// Add confetti animation
+// Add keyframes for confetti animation
 const confettiStyle = document.createElement('style');
-confettiStyle.textContent = `
-    @keyframes confettiFall {
+confettiStyle.innerHTML = `
+    @keyframes fall {
         to {
-            transform: translateY(100vh) rotate(360deg);
+            transform: translateY(110vh) rotate(${Math.random() * 720}deg);
             opacity: 0;
         }
     }
