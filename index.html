@@ -55,14 +55,14 @@
             <div class="chapters-grid">
                 <div class="chapter-card active" data-chapter="1">
                     <div class="chapter-number">01</div>
-                    <h3>UI with Jetpack Compose</h3>
-                    <p>Learn to build beautiful app interfaces like <strong>painting on a digital canvas</strong>!</p>
+                    <h3>Basics of Compose</h3>
+                    <p>Learn the absolute fundamentals of Jetpack Compose. We'll explore what Composables are, how to manage state, and how to build simple, interactive UIs. 🧱</p>
                     <span class="chapter-status">Current Chapter</span>
                 </div>
                 <div class="chapter-card available" data-chapter="2">
                     <div class="chapter-number">02</div>
-                    <h3>Data & Variables</h3>
-                    <p>Learn about <strong>magic boxes that remember things</strong> for your app!</p>
+                    <h3>UI with Jetpack Compose</h3>
+                    <p>Learn to build beautiful app interfaces like <strong>painting on a digital canvas</strong>!</p>
                     <span class="chapter-status">Available</span>
                 </div>
                 <div class="chapter-card available" data-chapter="3">
@@ -93,11 +93,152 @@
         </div>
     </section>
 
-    <!-- Chapter Content -->
-    <section id="chapter-content" class="chapter-content">
+    <!-- Chapter 1 Content -->
+    <section id="chapter-1-content" class="chapter-content">
         <div class="container">
             <div class="content-header">
-                <h1>Chapter 1: UI with Jetpack Compose</h1>
+                <h1>Chapter 1: Basics of Compose</h1>
+                <p class="chapter-intro">This chapter covers the absolute fundamentals of Jetpack Compose. We'll explore what Composables are, how to manage state, and how to build simple, interactive UIs. 🧱</p>
+            </div>
+
+            <div class="content-section">
+                <!-- Sub-Chapter 1.1 -->
+                <div class="sub-chapter">
+                    <h3>1.1 - What is a Composable Function?</h3>
+                    <div class="explanation-box">
+                        <p>A Composable function is a regular Kotlin function annotated with <code>@Composable</code>. It's the fundamental building block of a UI in Jetpack Compose. It describes a piece of your UI, and Compose takes care of rendering it.</p>
+                    </div>
+                    <div class="code-example">
+                        <div class="code-header">
+                            <span class="code-title">Composable Function</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                        </div>
+                        <pre><code class="language-kotlin">// This is a Composable function.
+// It can be called from other Composable functions.
+@Composable
+fun SimpleText(name: String) {
+    Text(text = "Hello, $name!")
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- Sub-Chapter 1.2 -->
+                <div class="sub-chapter">
+                    <h3>1.2 - State in Jetpack Compose</h3>
+                    <div class="explanation-box">
+                        <p>State is any value that can change over time and affect the UI. In Compose, we use state objects to hold these values. When the state changes, Compose automatically re-runs the Composable functions that depend on it (this is called <strong>recomposition</strong>) to update the UI.</p>
+                    </div>
+                </div>
+
+                <!-- Sub-Chapter 1.3 -->
+                <div class="sub-chapter">
+                    <h3>1.3 - The `remember` Keyword</h3>
+                    <div class="explanation-box">
+                        <p>The <code>remember</code> keyword is crucial for state management. When a Composable function is recomposed, any regular variables inside it are reset. <code>remember</code> tells Compose to "remember" a value across recompositions, preserving its state.</p>
+                        <p><strong>When to use it:</strong> Use <code>remember</code> whenever you have a variable inside a Composable that should not be reset every time the UI updates.</p>
+                    </div>
+                </div>
+
+                <!-- Sub-Chapter 1.4 -->
+                <div class="sub-chapter">
+                    <h3>1.4 - `mutableStateOf`</h3>
+                    <div class="explanation-box">
+                        <p><code>mutableStateOf</code> is a function that creates an observable <code>MutableState</code> object. When the value of this state object changes, Compose automatically schedules a recomposition for any Composable that reads this state.</p>
+                        <p><strong>How to use it:</strong> Combine <code>remember</code> with <code>mutableStateOf</code> to create state that persists across recompositions and triggers UI updates when it changes.</p>
+                    </div>
+                    <div class="code-example">
+                        <div class="code-header">
+                            <span class="code-title">Interactive Counter</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                        </div>
+                        <pre><code class="language-kotlin">@Composable
+fun Counter() {
+    // 1. `remember` stores the `count` state across recompositions.
+    // 2. `mutableStateOf(0)` creates an observable state initialized to 0.
+    val count = remember { mutableStateOf(0) }
+
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Text(text = "Count: ${count.value}", fontSize = 24.sp)
+        
+        Button(onClick = { 
+            // 3. When the button is clicked, we update the state's value.
+            //    This triggers a recomposition of the Counter Composable.
+            count.value++ 
+        }) {
+            Text("Increment")
+        }
+    }
+}</code></pre>
+                    </div>
+                    <div class="tip-box">
+                        <h4>💡 Key Combination</h4>
+                        <p><code>remember</code> + <code>mutableStateOf</code> is the standard way to declare mutable state in a Composable. <code>remember</code> keeps the state alive, and <code>mutableStateOf</code> makes it observable.</p>
+                    </div>
+                </div>
+
+                <!-- Sub-Chapter 1.5 -->
+                <div class="sub-chapter">
+                    <h3>1.5 - Layout Composables</h3>
+                    <div class="explanation-box">
+                        <p>Layout Composables like <code>Column</code>, <code>Row</code>, and <code>Box</code> are used to arrange other Composables on the screen. <code>Column</code> arranges items vertically, <code>Row</code> arranges them horizontally, and <code>Box</code> lets you stack them on top of each other.</p>
+                    </div>
+                    <div class="code-example">
+                        <div class="code-header">
+                            <span class="code-title">Layout Example</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                        </div>
+                        <pre><code class="language-kotlin">@Composable
+fun SimpleLayout() {
+    Column { // Stacks children vertically
+        Text("Top")
+        Row { // Arranges children horizontally
+            Text("Left")
+            Text("Right")
+        }
+        Text("Bottom")
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- Sub-Chapter 1.6 -->
+                <div class="sub-chapter">
+                    <h3>1.6 - Modifiers</h3>
+                    <div class="explanation-box">
+                        <p>A <code>Modifier</code> allows you to decorate or add behavior to a Composable. You can change its size, add padding, give it a background color, make it clickable, and much more. Modifiers are applied sequentially.</p>
+                    </div>
+                    <div class="code-example">
+                        <div class="code-header">
+                            <span class="code-title">Modifier Example</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                        </div>
+                        <pre><code class="language-kotlin">@Composable
+fun StyledText() {
+    Text(
+        text = "Styled Text",
+        modifier = Modifier
+            .background(Color.Yellow) // Sets the background color
+            .padding(16.dp)           // Adds 16dp of padding around the text
+            .clickable { /* Handle click */ } // Makes the text clickable
+    )
+}</code></pre>
+                    </div>
+                </div>
+
+                <div class="next-steps">
+                    <h3>🚀 What's Next?</h3>
+                    <p>Now that you understand the basics, let's dive deeper into building beautiful UIs in the next chapter!</p>
+                    <button class="next-chapter-btn" onclick="showChapter(2)">Chapter 2: UI with Jetpack Compose! 🎨</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chapter 2 Content -->
+    <section id="chapter-2-content" class="chapter-content" style="display: none;">
+        <div class="container">
+            <div class="content-header">
+                <h1>Chapter 2: UI with Jetpack Compose</h1>
                 <p class="chapter-intro">Think of Jetpack Compose like <strong>LEGO blocks for apps</strong> - you snap different pieces together to build something amazing! 🎨</p>
             </div>
 
@@ -226,147 +367,6 @@ fun PrettyScreen() {
                     <h3>🚀 What's Next?</h3>
                     <p>In the next chapter, we'll learn about <strong>data and variables</strong> - think of them as <em>magic boxes that remember things</em> for your app!</p>
                     <button class="next-chapter-btn" onclick="showChapter(2)">Chapter 2: Data & Variables! 📚</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Chapter 2 Content -->
-    <section id="chapter-2-content" class="chapter-content" style="display: none;">
-        <div class="container">
-            <div class="content-header">
-                <h1>Chapter 2: Data & Variables</h1>
-                <p class="chapter-intro">Variables are like <strong>magic boxes with labels</strong> - you can put different things inside them and use them whenever you need! 📦✨</p>
-            </div>
-
-            <div class="content-section">
-                <h2>🎁 What are Variables?</h2>
-                <div class="explanation-box">
-                    <p>Imagine you have a bunch of <strong>labeled boxes in your room</strong>. One box is labeled "Favorite Color" and you put "Blue" inside it. Another box is labeled "Age" and you put "12" inside it.</p>
-                    
-                    <p>In programming: <strong>Variables are containers that store data</strong>. Instead of physical boxes, they're digital containers in your app's memory that can hold different types of information!</p>
-                </div>
-
-                <h3>📝 Creating Your First Variables</h3>
-                <p>In Android development with Kotlin, creating a variable is like <strong>getting a new box and putting a label on it</strong>:</p>
-
-                <div class="code-example">
-                    <div class="code-header">
-                        <span class="code-title">Creating Variables</span>
-                        <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
-                    </div>
-                    <pre><code class="language-kotlin">// Creating variables is like labeling boxes!
-val myName = "Alex"           // A box labeled "myName" with "Alex" inside
-val myAge = 12               // A box labeled "myAge" with number 12
-val isHappy = true           // A box labeled "isHappy" with "yes/true" inside
-val favoriteColor = "Blue"   // A box with your favorite color
-
-// You can also create empty boxes to fill later
-var currentScore = 0         // This box starts with 0 but can change!</code></pre>
-                </div>
-
-                <div class="analogy-box">
-                    <h4>🏠 Real-World Analogy</h4>
-                    <p>Think of variables like <strong>different types of storage containers</strong>:</p>
-                    <ul>
-                        <li><code>String</code> = <em>A treasure chest for words and letters</em></li>
-                        <li><code>Int</code> = <em>A piggy bank for whole numbers</em></li>
-                        <li><code>Boolean</code> = <em>A light switch (on/off, true/false)</em></li>
-                        <li><code>Double</code> = <em>A precise scale for decimal numbers</em></li>
-                    </ul>
-                </div>
-
-                <h3>🔄 val vs var: The Difference</h3>
-                <p>This is like the difference between a <strong>locked safe</strong> and a <strong>regular box</strong>:</p>
-
-                <div class="code-example">
-                    <div class="code-header">
-                        <span class="code-title">val vs var Explained</span>
-                        <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
-                    </div>
-                    <pre><code class="language-kotlin">// val = "value" - like a locked safe, can't change once set
-val birthYear = 2011        // This will never change
-val schoolName = "ABC School"  // This stays the same
-
-// var = "variable" - like a regular box, you can change what's inside
-var currentLevel = 1        // This can change as you progress
-var pointsEarned = 0        // This will change as you play
-var playerName = "Guest"    // This can be updated
-
-// Example of changing var values
-currentLevel = 2            // Level up!
-pointsEarned = 150         // You earned points!
-playerName = "SuperPlayer"  // Got a new name!</code></pre>
-                </div>
-
-                <div class="tip-box">
-                    <h4>💡 Pro Tip</h4>
-                    <p><strong>val</strong> = Like writing in permanent marker (can't erase)<br>
-                    <strong>var</strong> = Like writing in pencil (can erase and change)</p>
-                </div>
-
-                <h3>🎨 Using Variables in Your App</h3>
-                <p>Now let's see how to use these <em>magic boxes</em> in your Jetpack Compose app:</p>
-
-                <div class="code-example">
-                    <div class="code-header">
-                        <span class="code-title">Variables in Action</span>
-                        <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
-                    </div>
-                    <pre><code class="language-kotlin">@Composable
-fun PersonalCard() {
-    // Our magic boxes with information
-    val userName = "Emma"
-    val userAge = 13
-    val favoriteEmoji = "🎨"
-    var clickCount = 0
-    
-    Column(
-        modifier = Modifier.padding(16.dp)
-    ) {
-        // Using the variables in our UI
-        Text(
-            text = "Hello, I'm $userName!",    // Using userName variable
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Bold
-        )
-        
-        Text(
-            text = "I am $userAge years old",  // Using userAge variable
-            fontSize = 18.sp
-        )
-        
-        Text(
-            text = "My favorite emoji: $favoriteEmoji",  // Using favoriteEmoji
-            fontSize = 16.sp
-        )
-        
-        Button(onClick = { 
-            clickCount++  // Change the variable when clicked!
-        }) {
-            Text("Clicked $clickCount times")  // Show current click count
-        }
-    }
-}</code></pre>
-                </div>
-
-                <h3>🎯 Your Second Challenge!</h3>
-                <div class="challenge-box">
-                    <h4>🏆 Create Your Profile App</h4>
-                    <p>Build an app that uses variables to show:</p>
-                    <ul>
-                        <li>Your name using a <code>val</code> (it won't change)</li>
-                        <li>Your current mood using a <code>var</code> (it can change)</li>
-                        <li>A counter that goes up when you tap a button</li>
-                        <li>Your favorite animal emoji</li>
-                    </ul>
-                    <p><strong>Bonus:</strong> Add a button that changes your mood!</p>
-                </div>
-
-                <div class="next-steps">
-                    <h3>🚀 What's Next?</h3>
-                    <p>In the next chapter, we'll learn about <strong>functions and app logic</strong> - think of them as <em>recipes that make your app smart</em>!</p>
-                    <button class="next-chapter-btn" onclick="showChapter(3)">Chapter 3: App Logic & Functions! 🧠</button>
                 </div>
             </div>
         </div>
@@ -962,7 +962,7 @@ fun PostComposeView() {
                 <h2>💾 What is Room Database?</h2>
                 <div class="explanation-box">
                     <p>When your app needs to store data that persists even after the app is closed, you need a <strong>local database</strong>. Room is Android's recommended solution for local data storage.</p>
-                    
+                
                     <p><strong>Room Database</strong> is a persistence library that provides an abstraction layer over SQLite. It handles database creation, queries, and data management with compile-time verification.</p>
                 </div>
 
@@ -1041,7 +1041,7 @@ interface NoteDao {
                     </div>
 
                     <div class="tip-box">
-                        <h4>💡 DAO Operations</h4>
+                        <h4>�� DAO Operations</h4>
                         <p>Common DAO annotations:</p>
                         <ul>
                             <li><code>@Insert</code> = <em>Insert new records into database</em></li>
@@ -1067,7 +1067,7 @@ abstract class NoteDatabase : RoomDatabase() {
     abstract fun noteDao(): NoteDao
 
     companion object {
-        @Volatile 
+        @Volatile
         private var INSTANCE: NoteDatabase? = null
 
         fun getDatabase(context: Context): NoteDatabase {
